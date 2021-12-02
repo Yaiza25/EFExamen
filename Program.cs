@@ -175,22 +175,59 @@ class Program
         {
             // Filtering
 
+            WriteLine("Filtering");
+
             var query1 = db.Matriculas.Where(o => o.ModuloId == 1);
 
+            foreach (var item in query1)
+            {
+                WriteLine(item);
+            }
+
             // Return Anonymous Type
+
+            WriteLine("Return Anonymous Type");
 
             var query2 = db.Alumnos.Select(o => new {
                 AlumnoID = o.AlumnoId,
                 Nombre = o.Nombre
             });
 
+            foreach (var item in query2)
+            {
+                WriteLine(item);
+            }
+
             // Ordering
+
+            WriteLine("Ordering");
 
             var query3 = db.Modulos.OrderBy(o => o.ModuloId);
             var query4 = db.Modulos.OrderByDescending(o => o.ModuloId);
             var query5 = db.Modulos.OrderBy(o => o.ModuloId).ThenByDescending(o => o.Titulo);
 
+            foreach (var item in query3)
+            {
+                WriteLine(item);
+            }
+
+            WriteLine("----------------");
+
+            foreach (var item in query4)
+            {
+                WriteLine(item);
+            }
+
+            WriteLine("----------------");
+
+            foreach (var item in query5)
+            {
+                WriteLine(item);
+            }
+
             // Joining
+
+            WriteLine("Joining");
 
             var query6 = db.Alumnos.Join(db.Matriculas, alu => alu.AlumnoId, mat => mat.AlumnoId, (alu, mat) => new {
                 alu.AlumnoId,
@@ -198,19 +235,47 @@ class Program
                 mat.MatriculaId
             });
 
+            foreach (var item in query6)
+            {
+                WriteLine(item);
+            }
+
             // Grouping
+
+            WriteLine("Grouping");
 
             var query7 = db.Matriculas.GroupBy(o => o.AlumnoId).Select(g => new {
                 AlumnoId = g.Key,
                 TotalModulos = g.Count()
             });
 
+            foreach (var item in query7)
+            {
+                WriteLine(item);
+            }
+
             // Paging (using Skip & Take)
+
+            WriteLine("Paging (using Skip & Take)");
 
             var query8 = db.Alumnos.Where(o => o.AlumnoId < 5).Take(3);
             var query9 = db.Alumnos.Where(o => o.AlumnoId < 5).Skip(1);
 
+            foreach (var item in query8)
+            {
+                WriteLine(item);
+            }
+
+            WriteLine("----------------");
+
+            foreach (var item in query9)
+            {
+                WriteLine(item);
+            }
+
             // Element Operators (Single, Last, First, ElementAt, Defaults)
+
+            WriteLine("Element Operators (Single, Last, First, ElementAt, Defaults)");
 
             var query10 = db.Alumnos.Single(c => c.AlumnoId == 1);
             var query11 = db.Alumnos.SingleOrDefault(c => c.AlumnoId == 4);
@@ -218,11 +283,30 @@ class Program
             var query13 = db.Alumnos.Where(o => o.AlumnoId < 5).OrderBy(o => o.Nombre).Last();
             var query14 = db.Matriculas.Where(c => c.MatriculaId == 3).Select(o => o.MatriculaId).SingleOrDefault();
 
+            WriteLine(query10);
+            WriteLine("----------------");
+            WriteLine(query11);
+            WriteLine("----------------");
+            WriteLine(query12);
+            WriteLine("----------------");
+            WriteLine(query13);
+            WriteLine("----------------");
+            WriteLine(query14);
+
             // Conversions => ToArray
+
+            WriteLine("Conversions => ToArray");
 
             var query15 = (from c in db.Alumnos select c.Nombre).ToArray();
 
+            foreach (var item in query15)
+            {
+                WriteLine(item);
+            }
+
             // Conversions => ToDictionary
+
+            WriteLine("Conversions => ToDictionary");
 
             Dictionary<int, Alumno> query16 = db.Alumnos.ToDictionary(c => c.AlumnoId);
 
@@ -233,14 +317,35 @@ class Program
             //     )
             //     group oc by oc.Pelo into g
             //     select g).ToDictionary(g => g.Key, g => g.Max(oc => oc.Efectivo));
+            
+            foreach (var item in query16)
+            {
+                WriteLine(item);
+            }
+
 
             // Conversions => ToList
 
+            WriteLine("Conversions => ToList");
+
             List<Modulo> query18 = (from o in db.Modulos where o.ModuloId > 5 orderby o.Titulo select o).ToList();
+
+            foreach (var item in query18)
+            {
+                WriteLine(item);
+            }
+
 
             // Conversions => ToLookup
 
+            WriteLine("Conversions => ToLookup");
+
             ILookup<int, string> query19 = db.Modulos.ToLookup(c => c.ModuloId, c => c.Titulo);
+
+            foreach (var item in query19)
+            {
+                WriteLine(item);
+            }
 
         }
     }
