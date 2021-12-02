@@ -45,7 +45,7 @@ public class Alumno
     public decimal Efectivo { get; set; }
     public string Pelo { get; set; }
 
-    public List<Matricula> Matriculaciones { get; } = new List<Matricula>(); 
+    public List<Matricula> Matriculaciones { get; } = new List<Matricula>();
 
     public override string ToString() => $"{AlumnoId}: {Nombre}, edad {Edad}, tipo pelo {Pelo} - Efectivo: {Efectivo}";
 }
@@ -57,7 +57,7 @@ public class Modulo
     public int Creditos { get; set; }
     public int Curso { get; set; }
 
-    public List<Matricula> Matriculaciones { get; } = new List<Matricula>(); 
+    public List<Matricula> Matriculaciones { get; } = new List<Matricula>();
 
     public override string ToString() => $"{ModuloId}: {Titulo}, creditos {Creditos}, curso {Curso}";
 
@@ -70,7 +70,7 @@ public class Matricula
     public int ModuloId { get; set; }
 
     public Alumno Alumno { get; set; }
-    public Modulo Modulo { get; set; } 
+    public Modulo Modulo { get; set; }
 
     public override string ToString() => $"{MatriculaId}: Alumno {AlumnoId} - Modulo {ModuloId}";
 }
@@ -106,7 +106,7 @@ class Program
             db.SaveChanges();
 
             // Añadir Módulos
-            
+
             WriteLine("Insertar Módulos");
 
             db.Modulos.Add(new Modulo { ModuloId = 1, Titulo = "Matematicas", Creditos = 2 , Curso = 1 });
@@ -133,7 +133,7 @@ class Program
                 {
                     db.Matriculas.Add(new Matricula { Alumno = alumno, Modulo = modulo });
                 }
-                
+
             }
 
             db.SaveChanges();
@@ -240,7 +240,7 @@ class Program
 
             // Conversions => ToLookup
 
-            ILookup<int, string> query19 = db.Modulos.ToLookup(c => c.ModuloId, c => c.Titulo); 
+            ILookup<int, string> query19 = db.Modulos.ToLookup(c => c.ModuloId, c => c.Titulo);
 
         }
     }
